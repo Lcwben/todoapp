@@ -12,7 +12,9 @@ app.get('/',(req,res) =>{
 
 todoController(app);
 
-app.listen('8088');
+app.listen('8088',function(){
+    console.log('服务器端口:8088,启动中。');
+});
 
 
 
