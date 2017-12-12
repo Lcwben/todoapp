@@ -128,13 +128,16 @@
         })
 
         function deleteNote() {
-            let liVal = $('.remove').parent().parent().text().trim();
+            let liVal = $.trim($(this).parent().parent().text());
             $.ajax({
                 url : '/todo',
                 type : 'delete',
                 data : {'title':liVal},
                 success : (data)=> {
-                    alert('删除成功！');
+                    location.reload();
+                },
+                error(e) {
+                    alert('删除出错！');
                 }
             });
         }
