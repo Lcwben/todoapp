@@ -105,6 +105,7 @@
     <script>
         $(document).ready(function() {
 
+            //输入框按提交键调用的方法
             $('header').on('submit',()=> {
                 let newNote = $('form input').val();
 
@@ -122,7 +123,20 @@
                     }
                 });
             });
+
+            $('.remove').click(deleteNote);
         })
 
+        function deleteNote() {
+            let liVal = $('.remove').parent().parent().text().trim();
+            $.ajax({
+                url : '/todo',
+                type : 'delete',
+                data : {'title':liVal},
+                success : (data)=> {
+                    alert('删除成功！');
+                }
+            });
+        }
     </script>
 </html>

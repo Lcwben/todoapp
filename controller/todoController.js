@@ -19,6 +19,8 @@ module.exports = (app) => {
 
     //删除数据
     app.delete('/todo', (req, res) => {
-
+        console.log('in del:');
+        console.log(req.body);
+        dataArr.unshift(req.body);
     });
 }
