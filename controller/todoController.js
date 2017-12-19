@@ -1,6 +1,15 @@
 var bodyParser = require('body-parser');
 
-var dataArr = [{title:'测试数据1。'}];
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://lcwben:1988419@ds015962.mlab.com:15962/test_base1');
+//创建图表
+var noteSchema = new mongoose.Schema({
+    title : String
+});
+//建立model
+var noteModel= mongoose.model('note',noteSchema);
+
+/*var dataArr = [{title:'测试数据1。'}];*/
 
 module.exports = (app) => {
 
@@ -9,24 +18,40 @@ module.exports = (app) => {
 
     //获取数据
     app.get('/todo', (req, res) => {
-       res.render('todo',{list:dataArr});
+        noteModel.find({},(err,data)=> {
+            if(err) {
+                console.log('error occur:' + err.toString());
+            }
+            res.render('todo',{list:data});
+        });
     });
 
     //传递数据
     app.post('/todo', (req, res) => {
         console.log('new note:');
         console.log(req.body);
-        dataArr.push(req.body);
+        noteModel(req.body).save((err,data)=> {
+            if(err) {
+                console.log('error occur:' + err.toString());
+            }
+            res.json(data);
+        });
     });
 
     //删除数据
     app.delete('/todo', (req, res) => {
-        dataArr = dataArr.filter((data)=> {
+        noteModel.find({title : req.body.title}).remove((err,data)=> {
+            if(err) {
+                console.log('error occur:' + err.toString());
+            }
+            res.json(data);
+        });
+
+        /*dataArr = dataArr.filter((data)=> {
             console.log(data.title !== req.body.title);
             return data.title !== req.body.title;
-        });
-        console.log('dataArr after filter:');
-        console.log(dataArr);
-        res.json(dataArr);
+        });*/
+
+/*        res.json(dataArr);*/
     });
 }
