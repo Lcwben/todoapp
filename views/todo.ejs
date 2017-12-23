@@ -26,10 +26,11 @@
             </form>
         </header>
         <div class="container">
+            <!-- 待办行 -->
             <ul class="todo" id="todo">
                 <% list.forEach((note)=> { %>
-
-                <li>
+                <% if(note.done == false) { %>
+                <li value=<%=note.done==false?0:1 %>>
                     <%=note.title %>
                     <div class="buttons">
                         <button class="remove">
@@ -63,10 +64,16 @@
                         </button>
                     </div>
                 </li>
+                <% } %>
                 <% }); %>
             </ul>
+
+            <!-- 完成行 -->
             <ul class="todo" id="completed">
-                <li>
+                <% list.forEach((note)=> { %>
+                <% if(note.done == true) { %>
+                <li value=value=<%=note.done==false?0:1 %>>
+                    <%=note.title %>
                     <div class="buttons">
                         <button class="remove">
                             <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 22 22" style="enable-background:new 0 0 22 22;" xml:space="preserve">
@@ -99,6 +106,8 @@
                         </button>
                     </div>
                 </li>
+                <% } %>
+                <% }); %>
             </ul>
         </div>
     </body>
@@ -117,16 +126,24 @@
                 $.ajax({
                     url : '/todo',
                     type : 'post',
-                    data : {'title':newNote},
+                    data : {
+                        'title': newNote,
+                        'done' : false
+                    },
                     success : (data)=> {
 
                     }
                 });
             });
 
+            /* 点击垃圾桶按钮事件 */
             $('.remove').click(deleteNote);
+
+            /* 点击打钩按钮事件 */
+            $('.complete').click(completeNote);
         })
 
+        /* 删除笔记条目方法 */
         function deleteNote() {
             let liVal = $.trim($(this).parent().parent().text());
             $.ajax({
@@ -140,6 +157,28 @@
                     alert('删除出错！');
                 }
             });
+        }
+
+        /* 笔记条目设为完成方法 */
+        function completeNote() {
+            let liVal = $.trim($(this).parent().parent().text());
+            let isDone = $(this).parent().parent().val();
+            if (isDone == 0) {
+                $.ajax({
+                    url : '/todo/complete',
+                    type : 'post',
+                    data : {
+                        'title': liVal,
+                        'done' : true
+                    },
+                    success : (data)=> {
+                        location.reload();
+                    },
+                    error(e) {
+                        alert('修改出错！');
+                    }
+                });
+            }
         }
     </script>
 </html>
