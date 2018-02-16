@@ -10,6 +10,8 @@ body {
 
 header {
     /*width: 100%;*/
+    min-width: 100px;
+    width: 25%;
     height: 80px;
     position: fixed;
     top: 0;
@@ -19,8 +21,8 @@ header {
     -webkit-box-shadow: 0px 2px 4px rgba(44,62,80,0.15);
     -moz-box-shadow: 0px 2px 4px rgba(44,62,80,0.15);
     box-shadow: 0px 2px 4px rgba(44,62,80,0.15);
-    border-bottom-right-radius: 10px;
-    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
 }
 
 /* input输入框 */
@@ -228,7 +230,8 @@ ul.todo#completed:not(empty):before {
 }
 
 nav {
-    width: 202px;
+    min-width: 202px;
+    width: 25%;
     height: 100%;
     float: left;
 }

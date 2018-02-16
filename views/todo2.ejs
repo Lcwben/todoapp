@@ -1,0 +1,106 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script type="text/javascript" src="dist/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="dist/css/bootstrap.css">
+    <link rel="stylesheet" href="dist/css/bootstrap-theme.css">
+    <link rel="stylesheet" href="assets/reset.min.css">
+    <link rel="stylesheet" href="assets/style2.css">
+    <title>Todo App</title>
+
+</head>
+    <body>
+    <div class="mainDiv container">
+        <nav class="navbar navbar-left col-lg-3">
+            <form class="navbar-form" role="search">
+                <input type="text" placeholder="请输入内容" name="item" id="summary"/>
+                <button type="submit" id="add" class="btn-default btn-lg">
+                    <!--<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"viewBox="0 0 16 16" style="enable-background:new 0 0 16 16;" xml:space="preserve">
+                    <g>
+                        <path class="fill" d="M16,8c0,0.5-0.5,1-1,1H9v6c0,0.5-0.5,1-1,1s-1-0.5-1-1V9H1C0.5,9,0,8.5,0,8s0.5-1,1-1h6V1c0-0.5,0.5-1,1-1s1,0.5,1,1v6h6C15.5,7,16,7.5,16,8z"/>
+                    </g>
+                </svg>-->
+                </button>
+            </form>
+        </nav>
+        <div id="main_page" class="col-lg-9 col-md-9 col-sm-7 col-xs-12">
+
+        </div>
+    </div>
+    </body>
+    <script>
+        $(document).ready(function() {
+
+            //输入框按提交键调用的方法
+            $('header').on('submit',()=> {
+                let newNote = $('form input').val();
+
+                if(!newNote || newNote.trim()=='') {
+                    alert('您输入的内容为空。');
+                    return;
+                }
+
+                $.ajax({
+                    url : '/todo',
+                    type : 'post',
+                    data : {
+                        'title': newNote,
+                        'done' : false
+                    },
+                    success : (data)=> {
+
+                    }
+                });
+            });
+
+            /* 点击垃圾桶按钮事件 */
+            $('.remove').click(deleteNote);
+
+            /* 点击打钩按钮事件 */
+            $('.complete').click(completeNote);
+        })
+
+        /* 删除笔记条目方法 */
+        function deleteNote() {
+            let liVal = $.trim($(this).parent().parent().text());
+            $.ajax({
+                url : '/todo',
+                type : 'delete',
+                data : {'title':liVal},
+                success : (data)=> {
+                    location.reload();
+                },
+                error(e) {
+                    alert('删除出错！');
+                }
+            });
+        }
+
+        /* 笔记条目设为完成方法 */
+        function completeNote() {
+            let liVal = $.trim($(this).parent().parent().text());
+            let isDone = $(this).parent().parent().val();
+            if (isDone == 0) {
+                $.ajax({
+                    url : '/todo/complete',
+                    type : 'post',
+                    data : {
+                        'title': liVal,
+                        'done' : true
+                    },
+                    success : (data)=> {
+                        location.reload();
+                    },
+                    error(e) {
+                        alert('修改出错！');
+                    }
+                });
+            }
+        }
+    </script>
+</html>

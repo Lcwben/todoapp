@@ -1,0 +1,61 @@
+.mainDiv {
+    width: 100%;
+    height: 100%;
+}
+
+/* 主界面 */
+#main_page {
+    border: solid black 1px;
+    height: 100%;
+}
+
+/* 导航栏 */
+nav {
+    height: 80px;
+    top: 0;
+    left: 0;
+    background: #25b99a;
+    -webkit-box-shadow: 0px 2px 4px rgba(44,62,80,0.15);
+    -moz-box-shadow: 0px 2px 4px rgba(44,62,80,0.15);
+    box-shadow: 0px 2px 4px rgba(44,62,80,0.15);
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+/* 导航栏输入框 */
+
+nav input {
+    height: 50px;
+    font-size: 15px;
+    font-weight: 400;
+    text-indent: 18px;
+    /*margin: 15px;*/
+    /*background: rgba(255,255,255,0.2);*/
+    top: 15px;
+    border-radius: 10px;
+    border: 0px;
+    box-shadow: none;
+    outline: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+/* 导航栏按钮 */
+nav button {
+    width: 50px;
+    height: 50px;
+    border-radius: 25px;
+    position: absolute;
+    top: 15px;
+    right: 7.5%;
+    z-index: 2;
+    background: white;
+    border: 0px;
+    box-shadow: none;
+    outline: none;
+    cursor: pointer;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}

@@ -17,6 +17,10 @@ module.exports = (app) => {
     //转换url中的参数
     app.use(bodyParser.urlencoded({ extended: false }));
 
+    app.get('/todo2',(req, res) => {
+        res.render('todo2');
+    });
+
     //获取数据
     app.get('/todo', (req, res) => {
         noteModel.find({},(err,data)=> {
