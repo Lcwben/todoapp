@@ -1,13 +1,34 @@
 <template>
   <div id="app">
     <img src="./assets/logo.png">
-    <router-view/>
+<!--    <router-view/>-->
+    <div id="todo_input">
+      <button v-on:click="alertMsg(inputMsg)">添加</button>
+      <label>
+        <input type="text" v-model="inputMsg"/>
+      </label>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'App'
+  name: 'helloFirst',
+  filters: {
+    transUpper: function (input) {
+      return input.toUpperCase()
+    }
+  },
+  data () {
+    return {
+      inputMsg: '请输入代办事项'
+    }
+  },
+  methods: {
+    alertMsg: function (inputMsg) {
+      alert(inputMsg)
+    }
+  }
 }
 </script>
 
